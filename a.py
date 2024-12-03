@@ -125,3 +125,114 @@ class SimuladorAeropuerto:
         if not vuelo.pasajeros_asignados:
             return f"No hay pasajeros registrados en el vuelo {vuelo.codigo}."
         return "\n".join(str(pasajero) for pasajero in vuelo.pasajeros_asignados)
+    
+def menu_principal():
+    simulador = SimuladorAeropuerto()
+
+    # Configuración inicial con hora actual
+    print("\n=== Configuración inicial ===")
+    hora_base = datetime.now()
+
+    def agregar_personal():
+        print("\n=== Agregar Personal ===")
+        nombre = input("Nombre del personal: ")
+        apellido = input("Apellido del personal: ")
+        print("Seleccione el rol:")
+        print("1. Piloto")
+        print("2. Sobrecargo")
+        opcion_rol = input("Seleccione una opción (1 o 2): ")
+        rol = "Piloto" if opcion_rol == "1" else "Sobrecargo" if opcion_rol == "2" else None
+        if not rol:
+            print("Rol inválido.")
+            return
+        vuelo_codigo = input("Ingrese el código del vuelo al que se asignará el personal: ")
+        vuelo = next((v for v in simulador.vuelos if v.codigo == vuelo_codigo), None)
+        if vuelo:
+            mensaje = simulador.agregar_personal(vuelo, nombre, apellido, rol)
+            print(mensaje)
+        else:
+            print("Vuelo no encontrado.")
+
+    def agregar_pasajero():
+        print("\n=== Agregar Pasajero ===")
+        nombre = input("Nombre del pasajero: ")
+        apellido = input("Apellido del pasajero: ")
+        vuelo_codigo = input("Ingrese el código del vuelo al que se asignará el pasajero: ")
+        vuelo = next((v for v in simulador.vuelos if v.codigo == vuelo_codigo), None)
+        if vuelo:
+            mensaje = simulador.agregar_pasajero(vuelo, nombre, apellido)
+            print(mensaje)
+        else:
+            print("Vuelo no encontrado.")
+
+    def programar_vuelo():
+        print("\n=== Programar Vuelo ===")
+        codigo = input("Código del vuelo: ")
+        origen = input("Ciudad de origen: ")
+        destino = input("Ciudad de destino: ")
+        duracion_horas = int(input("Duración del vuelo (en horas): "))
+        vuelo = simulador.programar_vuelo(codigo, origen, destino, duracion_horas)
+        print(f"Vuelo {vuelo} programado con éxito.")
+
+    def asignar_puerta():
+        print("\n=== Asignar Puerta a Vuelo ===")
+        if not simulador.vuelos:
+            print("No hay vuelos disponibles.")
+            return
+        vuelo_codigo = input("Ingrese el código del vuelo al que se asignará la puerta: ")
+        vuelo = next((v for v in simulador.vuelos if v.codigo == vuelo_codigo), None)
+        if vuelo:
+            mensaje = simulador.asignar_puerta_a_vuelo(vuelo, hora_base)
+            print(mensaje)
+        else:
+            print("Vuelo no encontrado.")
+
+    def ver_listas():
+        print("\n=== Ver Listas ===")
+        vuelo_codigo = input("Ingrese el código del vuelo para ver las listas de pasajeros y personal: ")
+        vuelo = next((v for v in simulador.vuelos if v.codigo == vuelo_codigo), None)
+        if vuelo:
+            print("\nLista de Personal:")
+            print(simulador.ver_lista_personal(vuelo))
+            print("\nLista de Pasajeros:")
+            print(simulador.ver_lista_pasajeros(vuelo))
+        else:
+            print("Vuelo no encontrado.")
+
+    def trafico_aereo():
+        simulador.simular_trafico(hora_base)
+        print("\nTráfico Aéreo simulado.")
+        print("\n=== Lista de Vuelos ===")
+        print(simulador.ver_lista_vuelos())
+
+    while True:
+        print("\n=== Menú Principal ===")
+        print("1. Programar Vuelo")
+        print("2. Asignar Puerta")
+        print("3. Agregar Personal")
+        print("4. Agregar Pasajero")
+        print("5. Tráfico Aéreo")
+        print("6. Ver Listas")
+        print("7. Salir")
+        opcion = input("Seleccione una opción (1-7): ")
+
+        if opcion == "1":
+            programar_vuelo()
+        elif opcion == "2":
+            asignar_puerta()
+        elif opcion == "3":
+            agregar_personal()
+        elif opcion == "4":
+            agregar_pasajero()
+        elif opcion == "5":
+            trafico_aereo()
+        elif opcion == "6":
+            ver_listas()
+        elif opcion == "7":
+            print("Saliendo del simulador...")
+            break
+        else:
+            print("Opción inválida. Intente nuevamente.")
+
+
+menu_principal()    
