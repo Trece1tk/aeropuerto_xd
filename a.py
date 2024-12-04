@@ -129,7 +129,6 @@ class SimuladorAeropuerto:
 def menu_principal():
     simulador = SimuladorAeropuerto()
 
-    # Configuración inicial con hora actual
     print("\n=== Configuración inicial ===")
     hora_base = datetime.now()
 
