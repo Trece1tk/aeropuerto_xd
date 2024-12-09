@@ -7,4 +7,13 @@
 ### Se requiere desarrollar un simulador de aeropuerto utilizando pseudocódigo que represente de manera precisa y estructurada las principales operaciones y dinámicas de un aeropuerto real. Este simulador debe incorporar un diseño orientado a objetos, creando clases que representen los elementos fundamentales del sistema, como los pasajeros, la programación y gestión de vuelos, el personal del aeropuerto y otros componentes logísticos esenciales.
 
 ## 3-Diseño de la solucion 
- 
+ (![alt text](image.png))
+ (![alt text](image-1.png))
+(![alt text](image-2.png))
+(![alt text](image-3.png))
+(![alt text](image-4.png) ![alt text](image-5.png) )
+(![alt text](image-6.png))
+(![alt text](image-7.png))
+(![alt text](image-8.png))
+(![alt text](image-9.png))
+## 4-Desarrollo de la solucion 
